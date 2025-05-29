@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tharlam Academy</title>
+  <meta name="description"
+    content="Tharlam Academy offers a holistic Buddhist and modern education for children and young monks in Kathmandu, Nepal. Support us today.">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* Base Reset and Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f9;
+      line-height: 1.6;
+      color: #03254c;
+      padding-top: 80px;
+      /* to offset fixed nav */
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1px auto;
+    }
+
+    .section-text h1,
+    h2,
+    h3 {
+      color: #03254c;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: #03254c;
+      padding: 20px 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: background-color 0.3s;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .nav-left h1 {
+      color: white;
+      font-size: 24px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      margin-left: 50px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: White;
+      margin: 4px 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 5px 0;
+      transition: color 0.3s;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a:focus {
+      color: white;
+      outline: none;
+    }
+
+    /* Banner */
+    .banner {
+      background: url("banner.png") no-repeat center/cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      height: 400px;
+      padding-bottom: 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .banner-text {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+      padding: 20px 30px;
+      border-radius: 10px;
+      max-width: 80%;
+      margin-bottom: 20px;
+    }
+
+    .banner-button {
+      background-color: #03254c;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .banner-button:hover,
+    .banner-button:focus {
+      background-color: black;
+      outline: none;
+    }
+
+    /* Two-column sections */
+    .two-column-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 0;
+      border-bottom: 1px solid #ccc;
+      background-color: none;
+      scroll-margin-top: 100px;
+      gap: 20px;
+    }
+
+    .two-column-section .section-text,
+    .two-column-section .section-image {
+      flex: 1;
+    }
+
+    .two-column-section .section-text {
+      text-align: left;
+      list-style-position: inside;
+    }
+
+    .two-column-section .section-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Modal content styles */
+    .modal {
+      display: none;
+      /* hidden by default */
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 20% auto;
+      padding: 20px 10px 60px 10px;
+      border-radius: 8px;
+      max-width: 600px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      background-color: #03254c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 0px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .close-button:hover {
+      background-color: black;
+    }
+
+    /* underline */
+    .underline {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      /* Adjust thickness as desired */
+      text-underline-offset: 4px;
+      /* Adjust gap between text and underline */
+      text-decoration-color: currentColor;
+      /* Optional: matches the text color */
+    }
+
+    /* contack */
+    body {
+      background: none;
+    }
+
+    section#contact {
+      padding: 20px 0px;
+      text-align: center;
+    }
+
+    section#contact h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #03254c;
+    }
+
+    section#contact hr {
+      width: 60px;
+      border: 2px solid #03254c;
+      margin: 10px auto 20px;
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      text-align: left;
+    }
+
+    .info-icon {
+      font-size: 28px;
+      color: #03254c;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .info-text h3 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      color: #03254c;
+    }
+
+    .info-text p,
+    .info-text a {
+      margin: 0;
+      font-size: 16px;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .info-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* scrool top */
+    #goTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background-color: #03254c;
+      color: white;
+      border: none;
+      padding: 2px 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.3s ease;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #06214d;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .footer-social {
+      margin-top: 10px;
+    }
+
+    .footer-social a {
+      color: white;
+      font-size: 28px;
+      margin: 0 12px;
+      display: inline-block;
+      transition: color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      /* removes grey tap flash on mobile */
+    }
+
+    .footer-social a:focus,
+    .footer-social a:active {
+      outline: none;
+      box-shadow: none;
+      background: none;
+      color: white;
+      /* prevents color flicker */
+    }
+
+    .footer-social a:hover {
+      transform: scale(1.1);
+      color: #ffcc00;
+      /* Optional hover color */
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 60px;
+      }
+
+      .two-column-section {
+        flex-direction: column;
+        text-align: left;
+        padding: 10px 10px;
+      }
+
+      .two-column-section .section-text,
+      .two-column-section .section-image {
+        width: 100%;
+        padding-left: auto;
+        list-style-position: none;
+        list-style-type: disc;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #03254c;
+        padding: 30px;
+        gap: 15px;
+        z-index: 999;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .banner-text {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+        padding: 10px 10px;
+        border-radius: 10px;
+        max-width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .hamburger {
+        display: flex;
+        background-color: #03254c;
+        padding: 3px;
+      }
+
+      /* contack */
+      .contact-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .info-item {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav aria-label="Primary navigation">
+    <div class="nav-container">
+      <div class="nav-left">
+        <h1>Tharlam Academy</h1>
+      </div>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation"
+        onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </button>
+      <div class="nav-right">
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="#introduction" onclick="closeMenu()">Introduction</a></li>
+          <li><a href="#mission" onclick="closeMenu()">Mission</a></li>
+          <li><a href="#curriculum" onclick="closeMenu()">Curriculum</a></li>
+          <li><a href="#schedule" onclick="closeMenu()">Schedule</a></li>
+          <li><a href="#support" onclick="closeMenu()">Support</a></li>
+          <li><a href="#students" onclick="closeMenu()">Students</a></li>
+          <li><a href="#principal" onclick="closeMenu()">Principal</a></li>
+          <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="banner" role="banner">
+    <div class="banner-text">
+      <h1>Tharlam-Website</h1>
+    </div>
+    <a href="support.html" class="banner-button">Support</a>
+  </div>
+
+  <div class="container">
+    <section id="introduction" class="two-column-section">
+      <div class="section-text">
+        <h3>Welcome to Tharlam-Academy</h3>
+        <p><b>Where Wisdom Meets Modern Learning</b><br>
+          in the heart of Kathmandu, Tharlam Academy is more than just a school — it's a place where young minds grow
+          with knowledge, compassion, and purpose. Inspired by Buddhist values and supported by a modern curriculum, we
+          offer students a well-rounded education rooted in tradition and aimed at the future.</p><br>
+        <b>A Unique Educational Experience</b>
+        <br>
+        <p>Tharlam Academy is a unique institution where modern academic learning meets the rich traditions of Buddhist
+          philosophy and culture.
+          Founded with the vision of nurturing compassionate, well-rounded individuals.... </p>
+        <button onclick="openModal('history-modal')" class="banner-button">Read More</button>
+      </div>
+      <div class="section-image">
+        <img src="house.png" alt="History Image" loading="lazy" />
+      </div>
+    </section>
+
+    <section id="mission" class="two-column-section">
+      <div class="section-text">
+        <h3>Our Mission Statement</h3>
+        <p>At Tharlam Academy, we provide a holistic education grounded in Buddhist philosophy and modern knowledge.
+          Our mission is to nurture the next generation of bodhisattvas—leaders dedicated to compassion, wisdom,
+          and service to all sentient beings.</p>
+      </div>
+    </section>
+
+    <section id="curriculum" class="two-column-section">
+      <div class="section-image">
+        <img src="monk.JPG" alt="Message from Rinpoche" loading="lazy" />
+      </div>
+      <div class="section-text">
+        <h3>Curriculum Overview</h3>
+        <p>Combining traditional Buddhist practices with modern academic subjects, our curriculum nurtures the mind,
+          heart, and spirit.</p><br>
+        <h4>Pre-Primary Level (class 4–6)</h4>
+        <p>At the Pre-Primary Level (Classes 4 to 6), students are introduced to basic reading and writing in the
+          Tibetan language. They also begin learning basic English and Mathematics. The daily routine includes prayers,
+          along with engaging in creative and physical activities to support their overall development.</p>
+        <button onclick="openModal('curriculum-modal')" class="banner-button">Read More</button>
+      </div>
+    </section>
+
+    <section id="schedule" class="two-column-section">
+      <div class="section-text">
+        <h4>Daily Schedule</h4>
+        <ul class="education-list">
+          <div class="sub-items">
+            5:30 AM – Morning Puja and Prayers<br />
+            7:00 AM – Breakfast<br />
+            7:40 AM – Avalokiteshvara Prayer & Meditation<br />
+            10:30 AM – Academic Classes<br />
+            3:30 PM – Sports and Play Time<br />
+            6:00 PM – Dinner Break<br />
+            8:30 PM – Homework and Self-Study
+          </div>
+        </ul>
+
+      </div>
+    </section>
+
+    <section id="support" class="two-column-section">
+      <div class="section-image">
+        <img src="pema.jpg" alt="Support Tharlam Academy" loading="lazy" />
+      </div>
+      <div class="section-text">
+        <h4>Sponsorship Opportunities</h4>
+        <p>Your support can change the future of a young monk at Tharlam Academy. By sponsoring a student or program,
+          you provide essential education, food, and resources for spiritual and academic growth.</p>
+        <br />
+        <h4>Sponsorship Options:</h4>
+        <p>You can support the academy in various ways. A monthly donation of <b>NC 3,000</b> helps cover nourishment
+          and daily needs for one student, while <b>NC 5,000 </b> educational materials and classroom support.
+          Contributing <b>NC 10,000</b> per month supports teacher salaries and training. A one-time donation of<b> NC
+            40,000</b> can fund a computer to enhance digital learning. Custom donations of any amount are also welcome,
+          offered from the heart.
+        </p><br>
+        <div class="#">
+          <a href="support.html" class="banner-button">Support</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="students" class="two-column-section">
+      <div class="section-image">
+        <img src="support.JPG" alt="Students participating in class" loading="lazy" /><br>
+        <p><strong>Lobsang Nyima, Age 12 (Class 4):</strong><br>“Before joining Tharlam Academy, I could not read. Now I
+          can recite prayers, study texts, and help others.”</p>
+      </div>
+
+      <div class="section-image">
+        <img src="leakshey.JPG" alt="Students participating in class" loading="lazy" /><br>
+        <p><strong>Gyen Lekshay, Senior Teacher:</strong><br>“We’re grateful to all the sponsors who help us learn not
+          only facts but how to be good human beings.”
+        </p>
+      </div>
+    </section>
+
+    <section id="principal" class="two-column-section">
+      <div class="section-image">
+        <img src="principal.JPG" alt="Tharlam Principal" loading="lazy" />
+      </div>
+      <div class="section-text">
+        <h3>Message from the Principal</h3>
+        <p>"Supporting a child’s education is like planting the seed of wisdom in this world. We invite you to walk this
+          path with us—gently, generously, and with joy."
+          <br>
+          <br>
+        <h4>Related Buddhist Inspiration</h4>
+        <p>"As a lamp lights another lamp, thousands of lamps can be lit from one. So too, wisdom shared spreads
+          boundless benefit."
+        </p><br>
+        ______Tenpa Gyaltsen_____<br> 
+        Principal of Tharlam-Academy</p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <hr />
+      <div class="contact-row">
+
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt info-icon" aria-hidden="true"></i>
+          <div class="info-text">
+            <h3>Address</h3>
+            <p>Tharlam Academy<br />Boudha-6, Kathmandu, Nepal</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-phone-alt info-icon" aria-hidden="true"></i>
+          <div class="info-text">
+            <h3>Phone / WhatsApp</h3>
+            <p>
+              <a href="tel:+9779810135310">+977-9810135310</a>
+              <!-- WhatsApp icon only -->
+              <a href="https://wa.me/9779810135310?text=Hello%20I%20am%20interested%20in%20Tharlam%20Academy"
+                target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" aria-label="Chat on WhatsApp"
+                style="margin-left: 10px; color: #25D366; font-size: 24px;">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </p>
+          </div>
+        </div>
+
+
+        <div class="info-item">
+          <i class="fas fa-envelope info-icon" aria-hidden="true"></i>
+          <div class="info-text">
+            <h3>Email</h3>
+            <p>
+              <a href="mailto:tharlamacademy@gmail.com">tharlamacademy@gmail.com</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Tharlam Academy. Visit Our Media.</p>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/profile.php?id=100057365083022&mibextid=wwXIfr" target="_blank"
+        aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="#" target="_blank" aria-label="Twitter">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/tharlamacademy?igsh=cjhwYnMwb2xiM3V3" target="_blank" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="#" target="_blank" aria-label="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a href="#" target="_blank" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Modal for introduction -->
+  <div id="history-modal" class="modal" style="display:none;">
+    <div class="modal-content" style="position: relative; padding-bottom: 60px;">
+      <span class="close" onclick="closeModal('history-modal')"
+        style="cursor:pointer; position: absolute; top: 10px; right: 15px; font-size: 28px;">&times;</span>
+      <h3>Introduction of Tharlam Academy</h3>
+      <hr><br>
+      <p>the academy provides a balanced curriculum that integrates formal education with moral and spiritual
+        development.</p><br>
+      <b>Our Students and Their Daily Practices</b>
+      <p>With around 100 students, Tharlam Academy creates a close-knit community that fosters both academic and
+        personal growth. Our students engage in daily practices designed to nurture their intellectual, physical, and
+        spiritual development.<br><br>Each day begins with meditation and mindfulness sessions, which help students
+        cultivate focus, discipline, and emotional well-being. In addition to academic lessons, students participate in
+        a variety of cultural activities, physical education, and spiritual practices, allowing them to grow as balanced
+        individuals. This holistic approach encourages students to develop a deep sense of responsibility, empathy, and
+        respect for others.</p>
+      <br>
+      <b>Encouraging Exploration and Growth</b>
+      <p>At Tharlam Academy, we encourage students to explore both intellectual and creative pursuits. From engaging
+        classroom lessons to cultural activities and house competitions, we create an environment that promotes
+        curiosity, cooperation, and self-expression. The academy emphasizes values such as kindness, discipline, and
+        respect—core principles of Buddhist heritage that inspire our teaching philosophy.</p>
+      <br>
+      <b>Beyond Academics: Engaging with the Community</b>
+      <p>Tharlam Academy is deeply committed to community involvement. We organize health checkups, cultural excursions,
+        and outreach programs that connect students with their local environment. These activities not only enhance
+        learning but also foster a sense of social responsibility. With the support of dedicated donors and educators,
+        the school continues to grow as a center for holistic education, preparing students not just for exams but for
+        life.</p>
+      <br>
+      <b>Learning for Life</b>
+      <p>At Tharlam Academy, learning extends beyond textbooks. Our classrooms are spaces for discovery, creativity, and
+        personal growth. Through cultural events, academic challenges, and community engagement, students learn not only
+        how to succeed but also how to make a meaningful difference in the world.</p>
+      <br>
+      <b>Our Commitment to the Future</b>
+      <p>Guided by dedicated educators and supported by our wider community, we are committed to nurturing thoughtful,
+        responsible individuals who are ready to contribute to a better world.</p>
+
+      <!-- Close Button -->
+      <button onclick="closeModal('history-modal')"
+        style="position: absolute; bottom: 15px; right: 20px; background-color: #03254c; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 3px; font-weight: bold;">Close</button>
+    </div>
+  </div>
+
+  <!-- Modal for curriculum -->
+  <div id="curriculum-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('curriculum-modal')">&times;</span>
+      <h3>Tharlam-Academhy Curriculum</h3>
+      <hr><br>
+      <b>Primary Level (Class 1–5)</b>
+      <p>At the Primary Level (Classes 1 to 5), students study Tibetan and English languages, along with Mathematics,
+        Science, and Social Studies. They are also introduced to Buddhist Studies and basic ritual practices as part of
+        their cultural and spiritual education.</p>
+      <br>
+      <b>Secondary Level (Class 6–8)</b>
+      <p>At the Secondary Level (Classes 6 to 8), students delve into advanced Tibetan grammar, English composition, and
+        continue their studies in Math and Science. Buddhist Studies cover key teachings such as the Four Noble Truths
+        and the Eightfold Path. Ritual training includes practices like making torma, performing pujas, and chanting
+        sutras.</p>
+      <br>
+      <b>Special Buddhist Practices</b>
+      <p>In addition to academic and ritual studies, students also learn and practice traditional spiritual activities
+        such as Mandala Offering, Prostrations, and Guru Yoga. They actively participate in important Buddha event
+        celebrations, deepening their connection to Buddhist culture and teachings.</p>
+      <!-- Close Button -->
+      <button onclick="closeModal('curriculum-modal')"
+        style="position: absolute; bottom: 15px; right: 20px; background-color: #03254c; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 3px; font-weight: bold;">Close</button>
+    </div>
+  </div>
+
+
+  <button id="goTopBtn" style="display:none; position: fixed; bottom: 40px; right: 20px;">⇧</button>
+
+  <script>
+    // Toggle Hamburger Menu
+    function toggleMenu() {
+      const navLinks = document.getElementById("primary-navigation");
+      const isExpanded = navLinks.classList.toggle("active");
+      document.querySelector(".hamburger").setAttribute("aria-expanded", isExpanded);
+    }
+
+    function closeMenu() {
+      const navLinks = document.getElementById("primary-navigation");
+      navLinks.classList.remove("active");
+      document.querySelector(".hamburger").setAttribute("aria-expanded", false);
+    }
+
+    // Modal Handling
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.style.display = "block";
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      const modals = document.querySelectorAll(".modal");
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    };
+
+    // Back to Top Button
+    const goTopBtn = document.getElementById('goTopBtn');
+    let hideTimeout;
+
+    function showButton() {
+      goTopBtn.style.display = 'block';
+
+      // Clear any previous hide timer
+      if (hideTimeout) clearTimeout(hideTimeout);
+
+      // Hide the button after 3 seconds of inactivity
+      hideTimeout = setTimeout(() => {
+        goTopBtn.style.display = 'none';
+      }, 3000);
+    }
+
+    // Show button when scrolling down from top
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        showButton();
+      } else {
+        goTopBtn.style.display = 'none';  // Hide at top
+      }
+    });
+
+    // Scroll to top on click
+    goTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+
+</html>
